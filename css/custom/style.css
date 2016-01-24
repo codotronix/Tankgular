@@ -1,0 +1,147 @@
+#battleField {
+	/*height: 600px;
+	width: 1000px;*/
+	position: relative;
+    background: #000;
+/*    background: #456B4B;*/
+/*	background: url("../../images/sidewalk-688364_640.jpg") 0 0 repeat;*/
+	overflow: hidden;
+}
+
+/*
+#tankCount {
+    padding: 6px 10px;
+    font-size: 17px;
+    color: #FFF;
+    background: #000;
+    border-radius: 5px;
+    margin: 1px;
+}
+*/
+
+#tank {
+	height: 70px;
+	width: 70px;
+	top: 0;
+	left: 0;
+	position: absolute;
+	background-image: url("../../images/sprite_tankgular.png");
+	background-repeat: no-repeat;
+    border-radius: 8px;
+    z-index: 99;
+	/*border: 1px solid #000;*/
+}
+
+.tankLeft {
+	background-position: -70px 0px;
+}
+
+.tankRight {
+	background-position: 0px 0px;
+} 
+
+.tankDown {
+	background-position: -210px 0px;
+}
+
+.tankUp {
+	background-position: -140px 0px;
+}
+
+.boom {
+/*    background-position: -280px 0px;*/
+/*    -webkit-animation: playerBoom 1s linear 2s infinite;  Chrome, Safari, Opera */
+/*    animation: playerBoom .5s steps(1) infinite;    */
+    background-image: none !important;
+    animation: bulletGlow .5s linear 5;
+    border: 3px solid #00F;
+}
+
+.bullet {
+    width: 16px;
+	height: 16px;
+	position: absolute;
+	background: #000;
+	border-radius: 50%;
+    box-sizing: border-box;
+    border: 3px solid #00F;
+}
+
+.enemyTank {
+	background-image: url("../../images/sprite_tankgular.png");
+	background-repeat: no-repeat;
+	height: 70px;
+	width: 70px;
+	overflow: hidden;
+	display: inline-block;
+	position: absolute;
+}
+
+.enemyTankLeft {
+	background-position: -70px -70px;
+}
+
+.enemyTankRight {
+	background-position: 0px -70px;
+}
+
+.enemyTankUp {
+	background-position: -140px -70px;
+}
+
+.enemyTankDown {
+	background-position: -210px -70px;
+}
+
+.enemyBullet {	
+	border: 3px solid #F00;	
+/*
+	-webkit-animation: bulletGlow .5s linear infinite;  Chrome, Safari, Opera 
+    animation: bulletGlow .5s linear infinite;
+*/
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes bulletGlow {
+	33% {background-color: yellow;}
+	66% {background-color: orange;}
+	100% {background-color: red;}
+}
+
+/* Standard syntax */
+@keyframes bulletGlow {
+	33% {background-color: yellow;}
+	66% {background-color: orange;}
+	100% {background-color: red;}
+}
+
+@-webkit-keyframes playerBoom {
+	0% {background-position: -140px 0px;}
+	25% {background-position: 0px 0px;}
+    50% {background-position: -210px 0px;}
+	75% {background-position: -70px 0px;}
+}
+
+/* Standard syntax */
+@keyframes playerBoom {
+	0% {background-position: -140px 0px;}
+	25% {background-position: 0px 0px;}
+    50% {background-position: -210px 0px;}
+	75% {background-position: -70px 0px;}
+}
+    
+@-webkit-keyframes enemyBoom {
+	25% {background-position: -140px 0px;}
+	50% {background-position: 0px 0px;}
+    75% {background-position: -210px 0px;}
+	100% {background-position: -70px 0px;}
+}
+
+/* Standard syntax */
+@keyframes enemyBoom {
+	25% {background-position: -140px 0px;}
+	50% {background-position: 0px 0px;}
+    75% {background-position: -210px 0px;}
+	100% {background-position: -70px 0px;
+}
+    
