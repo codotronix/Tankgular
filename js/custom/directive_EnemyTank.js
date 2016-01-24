@@ -1,6 +1,6 @@
 var app = angular.module("MainApp");
 
-app.directive("enemyTank", function ($window, gameManager) {
+app.directive("enemyTank", function ($window, gameManager, $rootScope) {
 	return {		
 		restrict: 'E',
 		/*replace: true,*/
@@ -173,6 +173,8 @@ app.directive("enemyTank", function ($window, gameManager) {
                 
                 if(gameManager.amIHit(tank)) {
                     $scope.alive = false;
+                    $scope.bulletAlive = false;
+                    $rootScope.enemyCount--;
                 }
             }
             

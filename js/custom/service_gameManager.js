@@ -57,6 +57,7 @@ app.service("gameManager", function ($timeout) {
         
         if (isColliding(playerBullet, enemyObj)) {
             delete enemies[enemyObj.ID];
+            delete enemyBullets[enemyObj.ID];
             return true;
         } else {
             return false;

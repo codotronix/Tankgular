@@ -1,14 +1,16 @@
 var app = angular.module("MainApp", []);
 
-app.controller("mainCtrl", ['$scope', '$window', '$compile', 'gameManager', function ($scope, $window, $compile, gameManager) {
+app.controller("mainCtrl", ['$scope', '$window', '$compile', 'gameManager', '$rootScope', function ($scope, $window, $compile, gameManager, $rootScope) {
 	$scope.field = {};
 	$scope.field.width = $window.innerWidth;
 	$scope.field.height = $window.innerHeight;
-    $scope.enemyCount = 3;
+    $rootScope.enemyCount = 3;
+    $scope.enemyID = $rootScope.enemyCount;    
     $scope.addEnemy = function (ev) {
         if(gameManager.isGameOver()) {return;}
-        $scope.enemyCount++;
-        angular.element(ev.target).parent().append($compile('<enemy-tank tank-id="' + $scope.enemyCount + '"></enemy-tank>')($scope));
+        $rootScope.enemyCount++;    //rootScope.enemyCount will also decrease if enemy dies
+        $scope.enemyID++;           //it will only keep on increasing
+        angular.element(ev.target).parent().append($compile('<enemy-tank tank-id="' + $scope.enemyID + '"></enemy-tank>')($scope));
     };
     
     gameManager.startGame();
