@@ -7,10 +7,17 @@ app.controller("mainCtrl", ['$scope', '$window', '$compile', 'gameManager', '$ro
     $rootScope.enemyCount = 3;
     $scope.enemyID = $rootScope.enemyCount;    
     $scope.addEnemy = function (ev) {
-        if(gameManager.isGameOver()) {return;}
+        if (gameManager.getGameState() == "stopped") {return;}
         $rootScope.enemyCount++;    //rootScope.enemyCount will also decrease if enemy dies
         $scope.enemyID++;           //it will only keep on increasing
         angular.element(ev.target).parent().append($compile('<enemy-tank tank-id="' + $scope.enemyID + '"></enemy-tank>')($scope));
+    };
+    $scope.togglePause = function () {
+        if (gameManager.getGameState() == "running") {
+            gameManager.pauseGame();
+        } else if (gameManager.getGameState() == "paused") {
+            gameManager.startGame();
+        }
     };
     
     gameManager.startGame();

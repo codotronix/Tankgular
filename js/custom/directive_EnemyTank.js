@@ -178,9 +178,6 @@ app.directive("enemyTank", function ($window, gameManager, $rootScope) {
                 }
             }
             
-            
-			//$interval(move, 100);
-			//$interval(createBullet, 500);
             gameManager.addToLoop([moveTank, manageBullet]);
 		},
 		/*

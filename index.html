@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Basic App</title>
+		<title>Tankgular - An AngulaJS Game</title>
 		<link rel="stylesheet" type="text/css" href="css/lib/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/custom/style.css"> 
 		<script src="js/lib/angular.min.js"></script>
@@ -27,6 +27,7 @@
             <button class="btn btn-warning" type="button"  data-ng-click="addEnemy($event)">
               ADD ENEMY <span class="badge"  id="tankCount">{{$root.enemyCount}}</span>
             </button>
+            <button class="btn btn-primary" data-ng-click="togglePause()">Play / Pause</button>
             
 			<!-- The Player Tank -->
 			<div id="tank" data-ng-controller="tankCtrl" class="{{tank.direction}}" data-ng-class="isPlayerKilled()? 'boom' : 'dhoom'" style="top:{{tank.top}}px;left:{{tank.left}}px;"></div>

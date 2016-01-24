@@ -65,7 +65,7 @@ app.controller("tankCtrl", ['$scope', '$document', 'gameManager', '$window', fun
     $scope.isPlayerKilled = gameManager.isPlayerKilled;
     
     angular.element($document).on('keydown', function (ev) {
-        if(gameManager.isGameOver()) {return;}
+        if(gameManager.getGameState() == "stopped") {return;}
         if (ev.keyCode == 37) {
             $scope.tank.moveLeft();
         } else if (ev.keyCode == 38) {
