@@ -1,6 +1,6 @@
-var app = angular.module("MainApp");
+angular.module("Tankgular")
 
-app.controller("tankCtrl", ['$scope', '$document', 'gameManager', '$window', function ($scope, $document, gameManager, $window) {
+.controller("tankCtrl", ['$scope', '$document', 'gameManager', '$window', function ($scope, $document, gameManager, $window) {
 	
     var screenHt = $window.innerHeight;
 	var screenWd = $window.innerWidth;
@@ -28,52 +28,54 @@ app.controller("tankCtrl", ['$scope', '$document', 'gameManager', '$window', fun
     
     $scope.bulletTop = 0;
     $scope.bulletLeft = 0;
-    $scope.bulletAlive = false;    
+    $scope.bulletAlive = false;
 
-	$scope.tank.moveLeft = function () { 
-		$scope.tank.direction = "tankLeft";
-		$scope.tank.left -= tank.speed;
-		if($scope.tank.left < 0) {
-			$scope.tank.left = 0;
-		}
-	};
+    $scope.tank.move = function (direction) {
+        $scope.tank.direction = direction || $scope.tank.direction || "tankRight";
 
-	$scope.tank.moveRight = function () {
-		$scope.tank.direction = "tankRight";
-		$scope.tank.left += tank.speed;
-		if($scope.tank.left > ($scope.field.width - tank.size)) {
-			$scope.tank.left = $scope.field.width - tank.size;
-		}
-	};
+        switch ($scope.tank.direction) {
+            case "tankLeft":
+                $scope.tank.left -= tank.speed;
+                if($scope.tank.left < 0) {
+                    $scope.tank.left = 0;
+                }
+                break;
 
-	$scope.tank.moveUp = function () {
-		$scope.tank.direction = "tankUp";
-		$scope.tank.top -= tank.speed;
-		if($scope.tank.top < 0) {
-			$scope.tank.top = 0;
-		} 
-	};
+            case "tankRight":
+                $scope.tank.left += tank.speed;
+                if($scope.tank.left > ($scope.field.width - tank.size)) {
+                    $scope.tank.left = $scope.field.width - tank.size;
+                }
+                break;
 
-	$scope.tank.moveDown = function () {
-		$scope.tank.direction = "tankDown";
-		$scope.tank.top += tank.speed; 
-		if($scope.tank.top > ($scope.field.height - tank.size)) {
-			$scope.tank.top = $scope.field.height - tank.size;
-		} 
-	};
+            case "tankUp":
+                $scope.tank.top -= tank.speed;
+                if($scope.tank.top < 0) {
+                    $scope.tank.top = 0;
+                }
+                break;
+
+            case "tankDown":
+                $scope.tank.top += tank.speed; 
+                if($scope.tank.top > ($scope.field.height - tank.size)) {
+                    $scope.tank.top = $scope.field.height - tank.size;
+                }
+                break;
+        }
+    }
     
     $scope.isPlayerKilled = gameManager.isPlayerKilled;
     
     angular.element($document).on('keydown', function (ev) {
-        if(gameManager.isGameOver()) {return;}
+        if(gameManager.getGameState() == "stopped") {return;}
         if (ev.keyCode == 37) {
-            $scope.tank.moveLeft();
+            $scope.tank.move("tankLeft");
         } else if (ev.keyCode == 38) {
-            $scope.tank.moveUp();
+            $scope.tank.move("tankUp");
         } else if (ev.keyCode == 39) {
-            $scope.tank.moveRight();
+            $scope.tank.move("tankRight");
         } else if (ev.keyCode == 40) {
-            $scope.tank.moveDown();
+            $scope.tank.move("tankDown");
         } else if (ev.keyCode == 32) {
             tank.fire();
         } else {
@@ -83,9 +85,33 @@ app.controller("tankCtrl", ['$scope', '$document', 'gameManager', '$window', fun
         //if here, means not returned, means safe to assume that player position has changed
         updatePlayerObj();
     });
+
+    $scope.fire = function () {
+        tank.fire();
+        //updateBulletInfo();
+        //updatePlayerObj();
+    }
+
+    // Touchscreen Controls
+    //var movingContinuously = false;
+    $scope.keepMoving = function (direction) {
+        $scope.tank.move(direction);
+        //$scope.tank.direction = direction;
+        // if (!movingContinuously) {
+        //     gameManager.addToLoop([moveContinuously]);
+        // }
+        updatePlayerObj();
+    }
+
+    //This will be called again and again in touchscreen devices
+    function moveContinuously () {
+        $scope.tank.move();
+    }
+    //////////////////////////////////////////////////////////////////////
+
     
     function moveBullet () { //console.log('moveBullet called');
-        if ($scope.bulletAlive) {console.log('moveBullet called');
+        if ($scope.bulletAlive) {
             if(bullet.direction == 'tankUp') {
                 $scope.bulletTop -= bullet.speed;
             } else if (bullet.direction == 'tankDown') {

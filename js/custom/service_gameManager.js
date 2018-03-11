@@ -1,21 +1,40 @@
-var app = angular.module("MainApp");
+angular.module("Tankgular")
+.service("gameManager", function ($timeout) {
+    var gameLoopCallbacks;
+    var gameState; //stopped, running, paused
+    var player;    //this should hold updated info of Player in each loop/cycle, like, x,y,size
+    var enemies;
+    var playerBullet;
+    var enemyBullets;
+    var playerKilled;
+    var destroyedTanks;
+    var playerKilledCB;
 
-app.service("gameManager", function ($timeout) {
-    var gameLoopCallbacks = [];
-    var gameRunning = false;
-    var player = {};    //this should hold updated info of Player in each loop/cycle, like, x,y,size
-    var enemies = {};
-    var playerBullet = {};
-    var enemyBullets = {};
-    var playerKilled = false;
-    var destroyedTanks = [];
+    this.init = function () {
+        gameLoopCallbacks = [];
+        gameState = "stopped";
+        player = {};
+        enemies = {};
+        playerBullet = {};
+        enemyBullets = {};
+        playerKilled = false;
+        destroyedTanks = [];
+    }
     
     this.startGame = function () {
-        gameRunning = true;
+        gameState = "running";
     };
     
     this.stopGame = function () {
-        gameRunning = false;
+        gameState = "stopped";
+    };
+    
+    this.pauseGame = function () {
+        gameState = "paused";
+    };
+    
+    this.getGameState = function () {
+        return gameState;
     };
     
     this.addToLoop = function (callbackFnArray) {        
@@ -47,11 +66,11 @@ app.service("gameManager", function ($timeout) {
     this.isPlayerKilled = function () {
         return playerKilled;
     };
-    
-    this.isGameOver = function () {
-        return !gameRunning;
-    };
-    
+
+    this.setPlayerKilledCallBack = function (cb) {
+        playerKilledCB = cb;
+    }
+        
     this.amIHit = function (enemyObj) {
         if (!playerBullet.alive) {return false;}
         
@@ -64,18 +83,8 @@ app.service("gameManager", function ($timeout) {
         }
     }
     
-//    this.isTankDestroyed = function (tankID) {
-//        //console.log('isTankDestroyed='+tankID);
-//        //console.log(destroyedTanks);
-//        if (destroyedTanks.indexOf(tankID + "") >= 0) { //console.log('true');
-//            return true;
-//        } else { //console.log('false');
-//            return false;
-//        }
-//    };
-    
     function runLoop () {
-        if (gameRunning) {
+        if (gameState == "running") {
             //call all the callback functions to update positions of enemies and bullets etc
             for(var i in gameLoopCallbacks) {
                 gameLoopCallbacks[i]();
@@ -92,7 +101,8 @@ app.service("gameManager", function ($timeout) {
         for (var i in enemies) {
             if(isColliding(enemies[i], player)) {
                 playerKilled = true;
-                gameRunning = false;
+                gameState = "stopped";
+                playerKilledCB();
                 //alert('collision between player and enemy_'+i);
                 return;
             }
@@ -102,7 +112,8 @@ app.service("gameManager", function ($timeout) {
         for (var i in enemyBullets) {
             if(isColliding(enemyBullets[i], player)) {
                 playerKilled = true;
-                gameRunning = false;
+                gameState = "stopped";
+                playerKilledCB();
                 //alert('collision between player and enemyBullet_'+i);
                 return;
             }
