@@ -1,17 +1,21 @@
 <!DOCTYPE html>
-<html data-ng-app="MainApp">
+<html data-ng-app="Tankgular">
 	<head>
 		<meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Tankgular - An AngulaJS Game</title>
 		<link rel="stylesheet" type="text/css" href="css/lib/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/lib/font-awesome-4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="css/custom/style.css"> 
-		<script src="js/lib/angular.min.js"></script>
+        <script src="js/lib/angular.min.js"></script>
+		<script src="js/lib/angular-route.min.js"></script>
 		<script src="js/custom/app.js"></script>
         <script src="js/custom/service_gameManager.js"></script>
 		<script src="js/custom/directive_EnemyTank.js"></script>
-		<script src="js/custom/controller_PlayerTank.js"></script>
+        <script src="js/custom/controller_PlayerTank.js"></script>
+        <script src="js/custom/gameController.js"></script>
+		<script src="js/custom/menuController.js"></script>
 		
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -21,25 +25,6 @@
 	    <![endif]-->
 	</head>
 	<body>
-		<div id="battleField" data-ng-controller="mainCtrl" style="height:{{field.height}}px;width:{{field.width}}px;">
-            
-            <!-- Button To Add more Enemies -->
-            <button class="btn btn-warning" type="button"  data-ng-click="addEnemy($event)">
-              ADD ENEMY <span class="badge"  id="tankCount">{{$root.enemyCount}}</span>
-            </button>
-            <button class="btn btn-primary" data-ng-click="togglePause()">Play / Pause</button>
-            
-			<!-- The Player Tank -->
-			<div id="tank" data-ng-controller="tankCtrl" class="{{tank.direction}}" data-ng-class="isPlayerKilled()? 'boom' : 'dhoom'" style="top:{{tank.top}}px;left:{{tank.left}}px;"></div>
-            <!-- Player Bullet -->
-            <div class="bullet" data-ng-controller="tankCtrl" style="top:{{bulletTop}}px;left:{{bulletLeft}}px;" data-ng-show="bulletAlive"></div>
-
-
-			<!-- The Enemy Tanks -->
-			<enemy-tank tank-id="1"></enemy-tank>
-			<enemy-tank tank-id="2"></enemy-tank>
-			<enemy-tank tank-id="3"></enemy-tank>
-
-		</div>			
+		<div data-ng-view=""></div>			
 	</body>
 </html>

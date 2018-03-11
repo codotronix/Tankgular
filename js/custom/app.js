@@ -1,39 +1,20 @@
-var app = angular.module("MainApp", []);
+angular.module("Tankgular", ['ngRoute'])
 
-app.controller("mainCtrl", ['$scope', '$window', '$compile', 'gameManager', '$rootScope', function ($scope, $window, $compile, gameManager, $rootScope) {
-	$scope.field = {};
-	$scope.field.width = $window.innerWidth;
-	$scope.field.height = $window.innerHeight;
-    $rootScope.enemyCount = 3;
-    $scope.enemyID = $rootScope.enemyCount;    
-    $scope.addEnemy = function (ev) {
-        if (gameManager.getGameState() == "stopped") {return;}
-        $rootScope.enemyCount++;    //rootScope.enemyCount will also decrease if enemy dies
-        $scope.enemyID++;           //it will only keep on increasing
-        angular.element(ev.target).parent().append($compile('<enemy-tank tank-id="' + $scope.enemyID + '"></enemy-tank>')($scope));
-    };
-    $scope.togglePause = function () {
-        if (gameManager.getGameState() == "running") {
-            gameManager.pauseGame();
-        } else if (gameManager.getGameState() == "paused") {
-            gameManager.startGame();
-        }
-    };
-    
-    gameManager.startGame();
-    
-    //since ng-repeat can't loop without an array
-//    $scope.getArrayOfSizeN = function (n) {
-//        return new Array(n);
-//    };
-    
-    
-    
-	/*
-	function resolveCollision () {
+.config(["$routeProvider", function ($routeProvider) {
+    $routeProvider
+    .when("/menu", {
+        templateUrl: "templates/menu.html",
+        controller: "menuController"
+    })
+    .when("/game", {
+        templateUrl: "templates/game.html",
+        controller: "gameController"
+    })
+    .when("/", {
+        redirectTo: "/menu"
+    })
+    .otherwise({
+        redirectTo: "/"
+    });
 
-	}
-
-	cxge.onCollision(resolveCollision);
-	*/
 }]);

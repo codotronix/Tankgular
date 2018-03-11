@@ -1,14 +1,25 @@
-var app = angular.module("MainApp");
+angular.module("Tankgular")
+.service("gameManager", function ($timeout) {
+    var gameLoopCallbacks;
+    var gameState; //stopped, running, paused
+    var player;    //this should hold updated info of Player in each loop/cycle, like, x,y,size
+    var enemies;
+    var playerBullet;
+    var enemyBullets;
+    var playerKilled;
+    var destroyedTanks;
+    var playerKilledCB;
 
-app.service("gameManager", function ($timeout) {
-    var gameLoopCallbacks = [];
-    var gameState = "stopped"; //stopped, running, paused
-    var player = {};    //this should hold updated info of Player in each loop/cycle, like, x,y,size
-    var enemies = {};
-    var playerBullet = {};
-    var enemyBullets = {};
-    var playerKilled = false;
-    var destroyedTanks = [];
+    this.init = function () {
+        gameLoopCallbacks = [];
+        gameState = "stopped";
+        player = {};
+        enemies = {};
+        playerBullet = {};
+        enemyBullets = {};
+        playerKilled = false;
+        destroyedTanks = [];
+    }
     
     this.startGame = function () {
         gameState = "running";
@@ -55,6 +66,10 @@ app.service("gameManager", function ($timeout) {
     this.isPlayerKilled = function () {
         return playerKilled;
     };
+
+    this.setPlayerKilledCallBack = function (cb) {
+        playerKilledCB = cb;
+    }
         
     this.amIHit = function (enemyObj) {
         if (!playerBullet.alive) {return false;}
@@ -67,16 +82,6 @@ app.service("gameManager", function ($timeout) {
             return false;
         }
     }
-    
-//    this.isTankDestroyed = function (tankID) {
-//        //console.log('isTankDestroyed='+tankID);
-//        //console.log(destroyedTanks);
-//        if (destroyedTanks.indexOf(tankID + "") >= 0) { //console.log('true');
-//            return true;
-//        } else { //console.log('false');
-//            return false;
-//        }
-//    };
     
     function runLoop () {
         if (gameState == "running") {
@@ -97,6 +102,7 @@ app.service("gameManager", function ($timeout) {
             if(isColliding(enemies[i], player)) {
                 playerKilled = true;
                 gameState = "stopped";
+                playerKilledCB();
                 //alert('collision between player and enemy_'+i);
                 return;
             }
@@ -107,6 +113,7 @@ app.service("gameManager", function ($timeout) {
             if(isColliding(enemyBullets[i], player)) {
                 playerKilled = true;
                 gameState = "stopped";
+                playerKilledCB();
                 //alert('collision between player and enemyBullet_'+i);
                 return;
             }

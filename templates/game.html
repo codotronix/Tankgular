@@ -1,0 +1,37 @@
+<div id="battleField" style="height:{{field.height}}px;width:{{field.width}}px;">
+
+    <!-- Button To Add more Enemies -->
+    <div class="top-button-panel">
+        <button class="btn btn-danger" type="button"  data-ng-click="addEnemy($event)">
+          Give me more! <span class="badge" id="tankCount">{{$root.enemyCount}}</span>
+        </button>
+        <button class="btn btn-primary" data-ng-click="togglePause()"> Play / Pause </button>
+        <button class="btn btn-success" data-ng-click="exit()"> Escape </button>
+    </div>
+
+    
+    
+    <!-- The Player Tank Controls-->
+    <div data-ng-controller="tankCtrl">
+        <div id="tank" class="{{tank.direction}}" data-ng-class="isPlayerKilled()? 'boom' : 'dhoom'" style="top:{{tank.top}}px;left:{{tank.left}}px;"></div>
+        <!-- Player Bullet -->
+        <div class="bullet" data-ng-controller="tankCtrl" style="top:{{bulletTop}}px;left:{{bulletLeft}}px;" data-ng-show="bulletAlive"></div>
+
+        <!-- JOYSTICKS -->
+        <div id="left-joystick" class="joystick">
+            <i class="fa fa-chevron-left left" data-ng-click="keepMoving('tankLeft')"></i>
+            <i class="fa fa-chevron-up up" data-ng-click="keepMoving('tankUp')"></i>
+            <i class="fa fa-chevron-right right" data-ng-click="keepMoving('tankRight')"></i>
+            <i class="fa fa-chevron-down down" data-ng-click="keepMoving('tankDown')"></i>
+        </div>
+
+        <div id="right-joystick" class="joystick">
+            <i class="fa fa-hand-paper-o stop" data-ng-click="fire()"></i>
+        </div>
+    </div>
+
+
+    <!-- The Enemy Tanks -->
+    <enemy-tank tank-id="1""></enemy-tank>
+
+</div>

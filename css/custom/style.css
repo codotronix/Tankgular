@@ -1,23 +1,75 @@
+@font-face {
+  font-family: 'Aldrich';
+  src: url('fonts/Aldrich/Aldrich-Regular.eot');
+  src: url('fonts/Aldrich/Aldrich-Regular.woff2') format('woff2'),
+       url('fonts/Aldrich/Aldrich-Regular.woff') format('woff'),
+       url('fonts/Aldrich/Aldrich-Regular.ttf') format('truetype'),
+       url('fonts/Aldrich/Aldrich-Regular.svg#Aldrich-Regular') format('svg'),
+       url('fonts/Aldrich/Aldrich-Regular.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+body {
+    background: #000;
+    font-family: 'Aldrich', cursive;
+}
+#menuPage {
+    /*background: linear-gradient(to bottom right, blue, red);*/
+    text-align: center;
+    color: #fff;
+}
+#menuPage .title-bar {
+    text-align: center;
+    margin-top: 40px;
+}
+#menuPage .tank {
+    position: relative;
+    display: inline-block;
+}
+#menuPage .title {
+    font-size: 50px;
+    margin: 0 16px;
+    vertical-align: text-bottom;
+    border-bottom: 1px solid #fff;
+    border-top: 1px solid #fff;
+    padding: 10px;
+}
+#menuPage .menu {
+    margin-top: 30px;
+    padding: 0;
+    font-size: 30px;
+    list-style: none;
+    text-align: left;
+    display: inline-block;
+}
+#menuPage .menu li {
+    padding: 5px 10px 5px 30px;
+    /*background: linear-gradient(to right, blue, red);*/
+    color: #fff;
+    width: 300px;
+    margin-top: 5px 
+    border-radius: 4px;
+    text-overflow: hidden;
+    cursor: pointer;
+}
+#menuPage .menu li:hover {
+    background: #fff;
+    color: #000;
+    border-radius: 4px;
+}
 #battleField {
-	/*height: 600px;
-	width: 1000px;*/
 	position: relative;
     background: #000;
-/*    background: #456B4B;*/
-/*	background: url("../../images/sidewalk-688364_640.jpg") 0 0 repeat;*/
 	overflow: hidden;
 }
 
-/*
-#tankCount {
-    padding: 6px 10px;
-    font-size: 17px;
-    color: #FFF;
-    background: #000;
-    border-radius: 5px;
-    margin: 1px;
+#battleField .top-button-panel {
+    margin: 5px;
 }
-*/
+
+#battleField .top-button-panel button {
+    opacity: .7;
+}
 
 #tank {
 	height: 70px;
@@ -29,7 +81,6 @@
 	background-repeat: no-repeat;
     border-radius: 8px;
     z-index: 99;
-	/*border: 1px solid #000;*/
 }
 
 .tankLeft {
@@ -49,9 +100,6 @@
 }
 
 .boom {
-/*    background-position: -280px 0px;*/
-/*    -webkit-animation: playerBoom 1s linear 2s infinite;  Chrome, Safari, Opera */
-/*    animation: playerBoom .5s steps(1) infinite;    */
     background-image: none !important;
     animation: bulletGlow .5s linear 5;
     border: 3px solid #00F;
@@ -94,11 +142,81 @@
 }
 
 .enemyBullet {	
-	border: 3px solid #F00;	
-/*
-	-webkit-animation: bulletGlow .5s linear infinite;  Chrome, Safari, Opera 
-    animation: bulletGlow .5s linear infinite;
-*/
+	border: 3px solid #F00;    
+}
+
+.joystick {
+    position: absolute;
+    bottom: 0;
+}
+
+.joystick .fa {
+    color: #000;
+    background-color: rgba(255, 255, 255, 0.25);
+    z-index: 9999;
+    position: absolute;    
+    border-radius: 50%;
+}
+
+#left-joystick {
+    left: 0;
+}
+
+#right-joystick {
+    right: 0;
+}
+
+#right-joystick .stop {
+    padding: 25px;
+    font-size: 50px;
+    width: 100px;
+    height: 100px;
+    bottom: 15px;
+    right: 15px;
+}
+
+/*#right-joystick .fire {
+    font-size: 70px;
+    height: 100px;
+    width: 100px;
+    text-align: center;
+    padding: 12px;
+    border-radius: 50%;
+    bottom: 20px;
+    right: 20px;
+}*/
+
+#left-joystick .fa {
+    padding: 10px;
+    font-size: 50px;
+    width: 70px;
+    height: 70px;
+}
+
+
+#left-joystick .left {
+    left: 10px;
+    bottom: 57.5px;
+    padding-top: 12px;
+}
+
+#left-joystick .down {
+    left: 60px;
+    bottom: 5px;
+}
+
+#left-joystick .right {
+    left: 110px;
+    bottom: 57.5px;
+    text-align: center;
+    padding-left: 19px;
+    padding-top: 12px;
+}
+
+#left-joystick .up {
+    left: 60px;
+    bottom: 110px;
+    padding-top: 6px;
 }
 
 /* Chrome, Safari, Opera */

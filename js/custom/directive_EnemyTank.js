@@ -1,6 +1,6 @@
-var app = angular.module("MainApp");
+angular.module("Tankgular")
 
-app.directive("enemyTank", function ($window, gameManager, $rootScope) {
+.directive("enemyTank", function ($window, gameManager, $rootScope) {
 	return {		
 		restrict: 'E',
 		/*replace: true,*/
